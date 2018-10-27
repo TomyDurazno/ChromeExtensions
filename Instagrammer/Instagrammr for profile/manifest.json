@@ -1,0 +1,19 @@
+{
+  "manifest_version" : 3,
+  "name": "Instagrammer!",
+  "version": "1.0",
+  "description": "Download images from Instagram Profile! - Made with love by DuraznoLabs",
+   "content_scripts": [
+    {
+      "matches": ["*://*.instagram.com/*"],
+      "js": ["instagrammer-source.js"]
+    }
+  ],
+  "icons": {
+            "128" : "instagram-logo.png" 
+   },
+  "browser_action": {
+    "default_icon": "instagram-logo.png"
+  },
+  "permissions": ["tabs", "*://*.instagram.com/*"]
+}

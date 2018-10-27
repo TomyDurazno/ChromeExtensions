@@ -1,0 +1,17 @@
+
+	 
+	 switch(request.action)
+	 {
+		 case "OkExec":
+			globalEval(request.code);
+		 break;
+	 
+		case "Scrap":
+			sendResponse(JSON.stringify({location: location.href}));
+		 break;
+		 
+		 case "Pagina":
+			sendResponse(JSON.stringify({location: location.href +"13"}))
+		 break;
+	 }
+	 

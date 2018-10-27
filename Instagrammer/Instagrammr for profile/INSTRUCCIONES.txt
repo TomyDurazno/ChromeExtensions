@@ -1,0 +1,22 @@
+1 - Extraer el contenido del .zip
+2 - Poner "chrome://extensions" en la barra de búsqueda del navegador
+3 - Habilitar "Modo de desarrollador" (arriba a la derecha)
+4 - Clickear el botón "Cargar Descomprimida"
+5 - Ingresar la carpeta donde está este archivo
+6 - Abrir 'Instagram.com' en una nueva pestaña o apretar ctrl + f5 sobre la pestaña abierta con Instagram
+7 - Ahora al ingresar a un perfil de Instagram, una vez seleccionada una imagen, al darle click con el botón derecho del mouse
+	se abrirá la misma en una nueva pestaña para poder ser descargada.
+
+NOTAS: 
+
+- Chrome puede bloquear las extensiones que corren en modo desarrollador después de cierto tiempo, si eso sucede,
+Ir a "chrome://extensions", eliminar 'Instagrammer' y volver a cargarla.
+
+- Si en la imagen abierta en la nueva pestaña al darle botón derecho no aparece el menú donde se puede descargar la misma, esperar unos segundos.
+Eso puede pasar si el navegador no terminó de bajarla / darle el comportamiento
+
+- Si en algún momento del uso la extensión deja de funcionar pero se ve el ícono al lado de la barra, 
+probar volver a la página inicial del usuario y reintentar ingresar a la imagen.
+
+
+DuraznoLabs 2018® - RESERVADOS TODOS LOS DERECHOS Y LOS IZQUIERDOS TAMBIEN

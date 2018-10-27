@@ -1,0 +1,23 @@
+  .CodeMirror { 
+	min-height: 300px; border: 1px solid #ddd; }
+  .CodeMirror-scroll {  }
+  .CodeMirror pre { padding-left: 7px; line-height: 1.25; font-size:15px; }
+  
+  .demoForm {position: relative; margin-top: .5em; margin-bottom: .5em;}
+  
+  .contract {
+	min-width: 500px;
+	-webkit-transition: min-width .5s ease;
+	transition: min-width .5s ease;
+  }
+  
+    .expand {
+	 min-width: 800px;
+	-webkit-transition: min-width .5s ease;
+	transition: min-width .5s ease;
+  }
+  
+  .transparentModal{
+	background-color: transparent!important;
+  }
+  
