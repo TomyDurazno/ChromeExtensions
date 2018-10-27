@@ -2,7 +2,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
 	
 	if (request.action == "OkExec"){
 	   
-		//globalEval(request.code);
+		globalEval(request.code);
 	}
 	
 	 if (request.action == "Scrap"){
