@@ -1,0 +1,2 @@
+- git pull origin master //Para mergear el contenido en github con el repo local
+- git push origin master //Para publicar el contenido del repo local a github
