@@ -1,24 +1,5 @@
 chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
-	
-	if (request.action == "OkExec"){
-	   
-		globalEval(request.code);
-	}
-	
-	 if (request.action == "Scrap"){
-		
-		var m =	{location: location.href};
-		 //sendResponse(JSON.stringify(m));
-	 }
-	 
-	  if (request.action == "Pagina"){
-		
-		var m =	{location: location.href +"13"};
-		// sendResponse(JSON.stringify(m));
-	 }
-	 
-	 //
-	 
+		 
 	switch(request.action)
 	 {
 		 case "OkExec":
@@ -45,8 +26,7 @@ function globalEval(code){
 			this.parentNode.removeChild(this);
 		};
 
-		(document.head||document.documentElement).appendChild(s);
-	
+		(document.head||document.documentElement).appendChild(s);	
 }
 
 
