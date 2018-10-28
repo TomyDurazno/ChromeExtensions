@@ -1,0 +1,5 @@
+10/28/2018 - Initial Evo File
+
+Instagrammer project consists of two different implementatios, one that works for the profile
+ and the other that works for main page. It should work as one implementation
+ that changes behaviour wherever it is running
