@@ -1,3 +1,3 @@
 # ChromeExtensions
 
-A handfull of different extensions for Chrome
+A handfull of extensions for Chrome
