@@ -1,5 +1,0 @@
-10/28/2018
-
-Add functionality to import/export tabs storage
-Maybe: redefine behaviour of storage so that uses an instance of mirror for each tab opened
-(in that way, each one does correctly Undo/Redo)

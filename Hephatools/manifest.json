@@ -1,5 +1,5 @@
 {
-  "name": "HephaTools Extension",
+  "name": "Hephatools Extension",
   "version": "1.0",
   "manifest_version": 2,
   "description": "Tools for web development",
@@ -13,7 +13,7 @@
   "default_locale": "en",
   "browser_action": {
     "default_icon": "icons/hepha16.png",
-    "default_title": "HephaTools",
+    "default_title": "Hephatools",
     "default_popup": "hephatools/index.html"
   },
   "permissions": [

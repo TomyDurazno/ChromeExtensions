@@ -1,0 +1,15 @@
+- Pipes between page/contentscript/extension back and fourth
+
+-> utilizar 'sendResponse' para comunicarse desde el contentscript a la extension
+
+-> generar un objeto de persistencia en el DOM (a través de document.head.appendChild, puede estar serializado en JSON) y manipular su estado después de cada "OkExec" 
+	(con el objetivo de poder armar un canal de comunicación entre la page y el content script) 
+	
+Canales actuales:
+
+	Extension -> Content Script -> Page.
+	
+Canales deseados (a implementar)
+
+	Page -> Content Script -> Extension (la inversa)
+	

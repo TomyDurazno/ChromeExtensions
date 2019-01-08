@@ -1,19 +1,14 @@
 chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
-		 
-	switch(request.action)
-	 {
-		 case "OkExec":
+	
+	if (request.action == "OkExec"){
+										
 			globalEval(request.code);
-		 break;
-	 
-		case "Scrap":
-			sendResponse(JSON.stringify({location: location.href}));
-		 break;
-		 
-		 case "Pagina":
-			sendResponse(JSON.stringify({location: location.href +"13"}))
-		 break;
-	 }
+	}
+	
+	if (request.action == "Link"){					
+											
+			download(formatOpen(location.href), getName(), ".html");
+	}	
 	
 });
 
@@ -26,8 +21,30 @@ function globalEval(code){
 			this.parentNode.removeChild(this);
 		};
 
-		(document.head||document.documentElement).appendChild(s);	
+		(document.head||document.documentElement).appendChild(s);
+	
 }
 
+function getName()
+{
+	return document.title + ".html";
+}
 
-//chrome.runtime.onMessage.addListener(function(any message, MessageSender sender, function sendResponse){}
+function formatOpen(auxTxt)
+{
+	return "<script>window.open('"+auxTxt+"','_self')</script>";
+}
+
+function download(data, filename, type) {
+    var file = new Blob([data], {type: type});
+        var a = document.createElement("a"),
+                url = URL.createObjectURL(file);
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(function() {
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);  
+        }, 0); 
+}

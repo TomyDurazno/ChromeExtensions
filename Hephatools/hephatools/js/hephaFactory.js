@@ -1,13 +1,15 @@
- function hephaFactory (window){
+function hephaFactory (){
 	
 	var mirror = document.getElementById("Mirror1");
-	var logger = document.getElementById("logger");
-	var CANTIDAD_TABS = 10;
 								
 		var mainBody = $("#mainBody");
 		
 		var select = $("#select-languages");
-
+		
+		var maxTabs = 15;
+		
+		var STRING_EMPTY = "";
+		
 		//editor
 		var editor = CodeMirror.fromTextArea(mirror, {
 				lineNumbers: true,
@@ -15,10 +17,10 @@
 				matchBrackets: true,
 				lineWrapping: true,
 				extraKeys:{
-					"Ctrl-S": () => vault.store(getSelectedTab()),
-					"Ctrl-Enter": () => $("#btn-execute").click(),
-					"Ctrl-Backspace": () => $("#btn-borrar").click(),
-					"Ctrl-Q": () => $("#btn-comentar").click(),
+					"Ctrl-S": ()=>{ vault.store(getSelectedTab())},
+					"Ctrl-Enter": ()=>{ $("#btn-execute").click()},
+					"Ctrl-Backspace": ()=>{	$("#btn-borrar").click()},
+					"Ctrl-Q": ()=>{	$("#btn-comentar").click()}
 				}
 		});		
 		
@@ -42,6 +44,7 @@
  					.attr("title", "Expandir");
 
  			}			
+
 		}
 				
 		newTab = function(fnCallback){
@@ -61,34 +64,32 @@
 	
 				if (inputValue === false) return false;	
 				
-				if (inputValue === "") { swal.showInputError("Debe ingresar un nombre"); return false; }
+				if (inputValue === "") {
+					swal.showInputError("Debe ingresar un nombre");
+					return false
+				}
 				
-				var repite = $("#tabs").find("li")
-									   .get()
-									   .some(li=>$(li)
-									   .text() === inputValue)
+				var repite = $("#tabs").find("li").get()
+								.some(li=>$(li).text() === inputValue)
 								
-				if(repite){	swal.showInputError("El nombre ya existe"); return false; }
+				if(repite){
+					swal.showInputError("El nombre ya existe"); return false;
+				}
 				
 				var cantidad = $("#tabs").find("li").length;
 				
-				if(cantidad >= CANTIDAD_TABS){ swal.showInputError("Limite de tabs: " + CANTIDAD_TABS); return false; }
+				if(cantidad >= maxTabs){
+					swal.showInputError("Limite de tabs: "+maxTabs); return false;
+				}
 				
 				swal("Ok!", inputValue + " creado exitosamente", "success");
-				fnCallback(inputValue);							
+				fnCallback(inputValue);
+			
+				
 			});
 		}
 		
-		download = function(inputValue){
-			
-		var downInvoke = (textValue) => {
-				var pom = document.createElement('a');
-				pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(textValue));
-				pom.setAttribute('download', inputValue);
-				pom.click();
-												
-				swal("Ok!", inputValue + " exportado exitosamente", "success");
-		} 	
+		download = function(){
 			
 		swal({
 			title: "Exportar",
@@ -105,67 +106,26 @@
 	
 				if (inputValue === false) return false;	
 				
-				if (inputValue === "") { swal.showInputError("Debe ingresar un nombre"); return false }
+				if (inputValue === "") {
+					swal.showInputError("Debe ingresar un nombre");
+					return false
+				}
 				
-				downInvoke(editor.getValue());
-			});
-			
-		}
-		
-		getPage = function(fnCallback){	
-				//DOMLoaded del popup 
-				chrome.tabs.getSelected(null, function(tab) {
-				
-				//Mensaje para content
-				var obj = {	action: "Scrap"	}
-
-				blocker('fa fa-play',"100px");	
-
-				var inicial = new Date();	
-					
-				chrome.tabs.sendRequest(tab.id, obj, (response) => fnCallback(response));	
-			});
-		}
-		
-		downloadTxt = function(){
-			
-		swal({
-			title: "Pagina a Txt",
-			text: "",
-			type: "input",
-			showCancelButton: true,
-			confirmButtonColor: "#204d74",
-			confirmButtonText: "Txt",
-			closeOnConfirm: false,
-			animation: "slide-from-top",
-			inputPlaceholder: "Nombre: ",
-			inputType:"text"
-			}, function(inputValue){
-	
-				if (inputValue === false) return false;	
-				
-				if (inputValue === ""){ swal.showInputError("Debe ingresar un nombre"); return false }								
-				
-				//getPage((response) =>{
-														
-				//var pom = document.createElement('a');
-				//pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(response));
-				//pom.setAttribute('download', inputValue);
-				//pom.click();
+				var pom = document.createElement('a');
+				pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(editor.getValue()));
+				pom.setAttribute('download', inputValue);
+				pom.click();
 												
-				//swal("Ok!", inputValue + " exportado exitosamente", "success");
-					
-				//});
-				
-				download(inputValue);
+				swal("Ok!", inputValue + " exportado exitosamente", "success");
 			});
 			
 		}
 					
 		blocker = function(fAwesome, size){
+					console.log("<i class='"+fAwesome+"'; style='font-size: "+size+" color:green'; aria-hidden='true'></i>");
 					swal({
 						title: "",
-						text: "<i class='" + fAwesome + "'; style='font-size: " + size + "; aria-hidden='true'></i>",
+						text: "<i class='"+fAwesome+"'; style='font-size: "+size+"; aria-hidden='true'></i>",
 						timer: 500,
 						customClass: "transparentModal",
 						html: true,
@@ -189,20 +149,22 @@
 				state.size = $("#btn-expand").attr("title")
 					
 				state.tabs = $("#tabs")
-					 .find("li")
-					 .get()
-					 .map((li)=> { 
+					.find("li")
+					.get()
+					.map((li)=> { 
 						return {
 							"text": $(li).text(), 
 							"state" : $(li).hasClass("active") ? "active" : "not"
 						}
-					})	
+				})	
 				
+				//$.cookie(mirrorState, JSON.stringify(state), { expires: expire });
 				localStorage.setItem(mirrorState, JSON.stringify(state));
 			}
 			
 			restoreMirror = function(name){
 					
+				//var c = $.cookie(name);
 				var c = localStorage.getItem(name);
 					
 					if(c !== undefined && c !== null){
@@ -211,7 +173,6 @@
 						select.val(obj.lang);
 						editor.setOption("mode", obj.lang);
 						editor.setValue(obj.state);
-						$('#logger').val(obj.log)
 						
 					}else{
 						editor.setValue("");
@@ -251,7 +212,7 @@
 						
 						var container = $("#tabs");
 						
-						//Porque el mï¿½todo setBtnExpand funciona con el estado anterior del botï¿½n clickeado
+						//Porque el método setBtnExpand funciona con el estado anterior del botón clickeado
 						state.size === "Expandir" ? state.size = "Contraer" : state.size = "Expandir";
 						
 						setBtnExpand(state.size);
@@ -281,6 +242,7 @@
 			v = {
 				
 				setMirrors : function(arr){
+					//$.cookie(mirrorState, JSON.stringify(arr), { expires: expire });
 					localStorage.setItem(mirrorState, JSON.stringify(arr));
 				},
 				
@@ -306,10 +268,10 @@
 						nombre: name,
 						state : editor.getValue(),
 						lang : select.val(),
-						log : $('#logger').val()
 					}
 				
 					saveTabs();
+					//$.cookie(name, JSON.stringify(obj), { expires: expire });
 					localStorage.setItem(name, JSON.stringify(obj));
 				},
 
@@ -332,9 +294,13 @@
 				chrome.tabs.getSelected(null, function(tab) {
 				_tab = tab;
 				
+				var selection = editor.getSelection();
+				
+				var codeToBeExec = selection != STRING_EMPTY ? selection : editor.getValue();
+				
 				//Mensaje para content
 					var obj ={
-						code : editor.getValue(),
+						code : codeToBeExec,
 						action: "OkExec"
 					}
 				
@@ -344,50 +310,91 @@
 				blocker('fa fa-play',"100px");		
 					
 				chrome.tabs.sendRequest(tab.id, obj , function(response) { 
-					console.log("Response");
-					console.log(response);
+						console.log("response: ");
+						console.log(response);
 					})
 
 				});	
-			});										
-
-			$("#btn-borrar").on("click",()=>{
+			});							
+			
+			$("#btn-borrar").on(c,()=>{
 				blocker("fa fa-backward","100px");	
 				editor.setValue("");
 			});
 			
-			$("#btn-expand").on("click",()=> setBtnExpand($("#btn-expand").attr("title")));
-          
-			$("#btn-comentar").on("click",()=> editor.toggleComment());
+			$("#btn-expand").on(c,()=>{
 			
-			$("#btn-info").on("click",()=>{				
+			console.log($("#btn-expand").attr("title"));
+			setBtnExpand($("#btn-expand").attr("title"));
+			});
+          
+			$("#btn-comentar").on(c,()=>{editor.toggleComment();});
+			
+			$("#btn-info").on(c,()=>{				
 
-				swal({ title: "HephaTools v1.0", text: "<h3>Made with love by <span style='cursor:pointer' id='linker'>DuraznoLabs</span></h3> Text editor forked from CodeMirror </br> Swal forked from SweetAlert", html: true});	
+				swal({
+					title: "HephaTools v1.0",
+					text: "<h3>Made with love by <span style='cursor:pointer' id='linker'>DuraznoLabs</span></h3> Text editor forked from CodeMirror </br> Swal forked from SweetAlert",
+					html: true
+				});	
 						
 				var linker = $("#linker");		
 				
-				linker.on("click", () => window.open("http://www.duraznolabs.tk"));
+				linker.on("click",function(){
+					window.open("http://www.duraznolabs.tk");
+				})
 				
-				linker.on("mouseenter", () => linker.css("color","#ea9312")); //orange
+				linker.on("mouseenter", function() {
+					linker.css("color","#ea9312");//orange
+				});	
 
-				linker.on("mouseleave", () => linker.css("color","#797979"));					
+				linker.on("mouseleave", function() {
+					linker.css("color","#797979");//grey
+				});					
 
 			});
 			
-			$("#btn-guardar").on("click", () => vault.store(getSelectedTab()));
+			$("#btn-guardar").on(c,()=>{				
+				
+				vault.store(getSelectedTab())
+			});
 			
-			$("#btn-exportar").on("click",() => download());
+			$("#btn-exportar").on(c,()=>{				
+				
+				download();
+			});
 			
-			$("#btn-newTab").on("click",() => {
-				newTab((nombre)=> {
-					var li = $("<li><a data-toggle='tab' href='#home'>" + nombre + "</a></li>");
-					li.on("click",(e) => restoreMirror(nombre))
+			$("#btn-newTab").on(c,()=>{
+				newTab((nombre)=>{
+					var li = $("<li><a data-toggle='tab' href='#home'>"+ nombre +"</a></li>");
+					li.on("click",(e)=>{
+						restoreMirror(nombre);						
+					})
 					$("#tabs").append(li);
 				});
 			});
 			
-			$("#btn-pagina").on("click", () => downloadTxt());
-			
+			$("#btn-link").on(c, () => {
+				
+					
+				//DOMLoaded del popup 
+				chrome.tabs.getSelected(null, function(tab) {
+				_tab = tab;
+				
+				//Mensaje para content
+					var obj ={	
+						action: "Link"
+					}
+
+				//blocker('fa fa-play',"100px");		
+					
+				chrome.tabs.sendRequest(tab.id, obj , function(response) { 
+					
+					})
+
+				});	
+				
+			});
 			var state = "javascript";
 			
 			select.on(c,(event)=>{
@@ -400,69 +407,21 @@
 			});
 									
 		}
-
-					
-		_scrap = function (logger){
-				
-			//	var _tab;
-	
-				//DOMLoaded del popup 
-				chrome.tabs.getSelected(null, function(tab) {
-			//	_tab = tab;
-				
-				//Mensaje para content
-					var obj ={
-						code : logger.val(),
-						action: "Scrap"
-					}
-
-				blocker('fa fa-play',"100px");	
-
-				var inicial = new Date();	
-					
-				chrome.tabs.sendRequest(tab.id, obj , function(response) { 
-				
-				window.rest = response.split("");
-				rest = rest.filter((f,a)=>a!= 0 && a != rest.length-1).join('');
-				console.log(rest)
-				var finalT =new Date(rest);
-
-				console.log(finalT);
-						console.log(finalT - inicial);
-					})
-
-				});	
-			};
+		
 		
 		// objeto de retorno del factory
-		return inner = {
-			
-			instance : function(){
+		var inner = {};
+
+		inner.instance = function(){
 				setBotones();				
 				vault.restoreTabs().restoreMirror(getSelectedTab());	
-				
-				var conLogger = $('#logger')
-				
-				conLogger.keydown( e => { if (e.ctrlKey && e.keyCode == 13) {
-
-						_scrap(conLogger);
-				}})	
-
 				return inner;
-			},
+		}
 			
-			getEditor: function(){
-				return editor;	
-			},
-			scrap: function(code){
-				_scrap(code);
-			},
-			setResize: function(innerHeight){
-				var height = innerHeight - 212;
-				$("#CodeMirror").css({height: height});
-			}	
-		};
-	
+		inner.getEditor = function(){
+			return editor;	
+		} 
+		
+		return inner;
+		
 }
-
-

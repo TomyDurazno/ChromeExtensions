@@ -1,0 +1,7 @@
+- En vez de utilizar un sola instancia del Code Mirror, implementar una 			  lazy-loaded-cache-factory-version (wooooow) (una por cada pestaña, para poder usar ctrl z)
+- Poder importar/exportar uno o varios tabs
+- Poder renombrar los tabs y eliminar los tabs
+- Revisar la exportación a txt/file (repentinamente dejó de funcionar)
+- Poder ejecutar solamente el texto seleccionado // IMPLEMENTED !
+- Pipes between page/contentscript/extension back and fourth
+- Poder injectar estilos en la page 
