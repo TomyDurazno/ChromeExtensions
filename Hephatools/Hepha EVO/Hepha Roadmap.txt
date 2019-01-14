@@ -17,6 +17,15 @@ Status:
 	- Poder injectar estilos en la page 
 
 	-> BIG refactor/clean
+	
+		-> Separar la implementación del 'CodeMirror' de la de Hepha, y poder buildear 'Hepha' desde diferentes archivos .js para lograr una mejor calidad de código.
+		
+			- Posiblemente eliminar todo el código NO-buildeado que se arrastra del 'CodeMirror' 
+			
+		So:
+		
+			- Hepha tiene que funcionar indistintamente del txtEditor, sea 'CodeMirror' o no. Separar implementación
+			entre Hepha, CodeMirror y el código que llama al mirror ('index.html')
 
 Status 2:
 
@@ -26,6 +35,10 @@ Status 2:
 	
 	- Evaluar cómo poder hacer para buildear diferentes archivos js (webpack (?))
 	
-	- Definir cómo debería quedar el CodeMirror y sus dependencies (parece estar hecho en Typescript! y buildeado a Js)
+	- Definir cómo debería quedar el CodeMirror y sus dependencies (export/import en los JS y buildeado a un JS general)
 	
 		Edit: ver "16.Modules/html"
+		
+		Edit 2: ver "rollup.config.js" & "package.json" -> https://rollupjs.org/guide/en usado para buildear CodeMirror
+
+						

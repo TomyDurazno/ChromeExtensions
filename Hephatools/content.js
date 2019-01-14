@@ -1,17 +1,5 @@
 chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
-	
-	/*
-	if (request.action == "OkExec"){
-										
-			globalEval(request.code);
-	}
-	
-	if (request.action == "Link"){					
-											
-			download(formatOpen(location.href), getName(), ".html");
-	}	
-	*/
-	
+		
 	switch(request.action)
 	{
 		case "OkExec":
