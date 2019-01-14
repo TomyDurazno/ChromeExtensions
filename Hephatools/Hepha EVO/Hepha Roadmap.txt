@@ -1,5 +1,7 @@
 Status:
 
+	To Do:
+
 	- En vez de utilizar un sola instancia del Code Mirror, implementar una 			  lazy-loaded-cache-factory-version (wooooow) (una por cada pestaña, para poder usar ctrl z)
 
 	- Poder importar/exportar uno o varios tabs
@@ -15,3 +17,15 @@ Status:
 	- Poder injectar estilos en la page 
 
 	-> BIG refactor/clean
+
+Status 2:
+
+	- Hecha la exportación del state, ver si en vez de usar múltiples storages (uno general y 1 por cada tab), conviene usar uno general e ir pisándolo.
+	
+	- Funca la exportación a txt/file
+	
+	- Evaluar cómo poder hacer para buildear diferentes archivos js (webpack (?))
+	
+	- Definir cómo debería quedar el CodeMirror y sus dependencies (parece estar hecho en Typescript! y buildeado a Js)
+	
+		Edit: ver "16.Modules/html"

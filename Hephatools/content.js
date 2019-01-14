@@ -1,5 +1,6 @@
 chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
 	
+	/*
 	if (request.action == "OkExec"){
 										
 			globalEval(request.code);
@@ -9,6 +10,28 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
 											
 			download(formatOpen(location.href), getName(), ".html");
 	}	
+	*/
+	
+	switch(request.action)
+	{
+		case "OkExec":
+			
+			globalEval(request.code);
+			
+		break;
+		
+		case "Link":
+		
+			download(formatOpen(location.href), getName(), ".html");
+		
+		break;
+		
+		case "State":
+		
+			download(JSON.stringify(request.state), "Hepha state" + "_" + new Date().toDateString() + "_.json", ".json");
+			
+		break;
+	}
 	
 });
 

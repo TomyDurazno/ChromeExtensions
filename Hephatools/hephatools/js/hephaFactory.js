@@ -1,3 +1,5 @@
+//import { Log } from "./f.js"
+
 function hephaFactory (){
 	
 	var mirror = document.getElementById("Mirror1");
@@ -258,6 +260,21 @@ function hephaFactory (){
 					 
 				},
 				
+				getState : function(){
+					var state = localStorage.getItem(mirrorState);
+					
+					var state = JSON.parse(state);
+						
+					var tabs = state.tabs;
+					
+					var tArrays = tabs.map(t => JSON.parse(localStorage.getItem(t.text)));
+					
+					return {
+						"mirror" : state,
+						"tabs" : tArrays						
+					};
+				},
+				
 				store : function(name, notBlocker){ 
 					
 					if(notBlocker === undefined){
@@ -395,6 +412,30 @@ function hephaFactory (){
 				});	
 				
 			});
+			
+			$("#btn-state").on(c, () => {
+				
+								//DOMLoaded del popup 
+				chrome.tabs.getSelected(null, function(tab) {
+				_tab = tab;
+				
+				//Mensaje para content
+					var obj ={	
+						action: "State",
+						state: vault.getState()
+					}
+
+				blocker('fa fa-angle-down',"100px");		
+					
+				chrome.tabs.sendRequest(tab.id, obj , function(response) { 
+					
+						
+					})
+
+				});	
+				
+			});
+			
 			var state = "javascript";
 			
 			select.on(c,(event)=>{
